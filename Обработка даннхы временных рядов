@@ -1,0 +1,26 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+#определяем функцию, которая будет считывать данные из входного файла
+def read_data(input_file):
+    input_data = np.loadtxt(input_file, delimiter = None)
+
+    #преобразовываем эти данные во временные ряды
+    dates = pd.date_range('1950-01', periods = input_data.shape[0], freq = 'M')
+
+    #создаем данные временных рядов
+    output = pd.Series(input_data[:, dates], index = dates)
+    return output
+
+#Введим путь к входному файлу
+if __name__=='__main__':
+    input_file = "/Users/ao.txt"
+
+    #преобразовываем столбец в формат временных рядов
+    timeseries = read_data(input_file)
+    
+    #визуализируем данные
+    plt.figure()
+    timeseries.plot()
+    plt.show()
